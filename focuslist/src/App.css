@@ -489,3 +489,17 @@
     padding: 7px 9px;
   }
 }
+
+.clear-filters-button {
+  margin-top: 10px;
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  padding: 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.clear-filters-button:hover {
+  text-decoration: underline;
+}

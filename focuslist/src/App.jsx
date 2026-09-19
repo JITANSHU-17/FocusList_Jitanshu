@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
 
 import Header from "./components/Header";
 import TaskStats from "./components/TaskStats";
 import TaskForm from "./components/TaskForm";
+import TaskFilters from "./components/TaskFilters";
 import TaskList from "./components/TaskList";
 
 import { createTask } from "./utils/taskUtils";
@@ -11,8 +12,12 @@ import { createTask } from "./utils/taskUtils";
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const handleAddTask = (title, priority) => {
-    const newTask = createTask(title, priority);
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("all");
+  const [priority, setPriority] = useState("all");
+
+  const handleAddTask = (title, taskPriority) => {
+    const newTask = createTask(title, taskPriority);
 
     setTasks((currentTasks) => [
       newTask,
@@ -42,17 +47,45 @@ function App() {
   };
 
   const handleEditTask = (taskId, updates) => {
-  setTasks((currentTasks) =>
-    currentTasks.map((task) =>
-      task.id === taskId
-        ? {
-            ...task,
-            ...updates,
-          }
-        : task
-    )
-  );
-};
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              ...updates,
+            }
+          : task
+      )
+    );
+  };
+
+  const filteredTasks = useMemo(() => {
+    const normalizedSearch = search
+      .trim()
+      .toLowerCase();
+
+    return tasks.filter((task) => {
+      const matchesSearch =
+        task.title
+          .toLowerCase()
+          .includes(normalizedSearch);
+
+      const matchesStatus =
+        status === "all" ||
+        (status === "active" && !task.completed) ||
+        (status === "completed" && task.completed);
+
+      const matchesPriority =
+        priority === "all" ||
+        task.priority === priority;
+
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        matchesPriority
+      );
+    });
+  }, [tasks, search, status, priority]);
 
   return (
     <div className="app">
@@ -64,61 +97,25 @@ function App() {
 
           <TaskForm onAddTask={handleAddTask} />
 
-          <section className="filter-section">
-            <input
-              type="search"
-              placeholder="Search tasks..."
-              aria-label="Search tasks"
-              disabled
-            />
-
-            <div className="filter-row">
-              <div className="status-filters">
-                <button
-                  type="button"
-                  className="active"
-                  disabled
-                >
-                  All
-                </button>
-
-                <button
-                  type="button"
-                  disabled
-                >
-                  Active
-                </button>
-
-                <button
-                  type="button"
-                  disabled
-                >
-                  Completed
-                </button>
-              </div>
-
-              <select
-                defaultValue="all"
-                aria-label="Filter by priority"
-                disabled
-              >
-                <option value="all">
-                  All Priorities
-                </option>
-
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-              </select>
-            </div>
-          </section>
+          <TaskFilters
+            search={search}
+            onSearchChange={setSearch}
+            status={status}
+            onStatusChange={setStatus}
+            priority={priority}
+            onPriorityChange={setPriority}
+          />
 
           <TaskList
-            tasks={tasks}
+            tasks={filteredTasks}
             onToggleComplete={handleToggleComplete}
             onDeleteTask={handleDeleteTask}
             onEditTask={handleEditTask}
-
+            hasActiveFilters={
+              search.trim() !== "" ||
+              status !== "all" ||
+              priority !== "all"
+            }
           />
         </main>
       </div>

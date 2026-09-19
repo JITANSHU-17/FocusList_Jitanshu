@@ -5,17 +5,26 @@ function TaskList({
   onToggleComplete,
   onDeleteTask,
   onEditTask,
+  hasActiveFilters,
 }) {
   if (tasks.length === 0) {
     return (
       <section className="task-list">
         <div className="empty-state">
-          <div className="empty-icon">✓</div>
+          <div className="empty-icon">
+            {hasActiveFilters ? "⌕" : "✓"}
+          </div>
 
-          <h2>No tasks yet</h2>
+          <h2>
+            {hasActiveFilters
+              ? "No matching tasks"
+              : "No tasks yet"}
+          </h2>
 
           <p>
-            Add your first task and start focusing.
+            {hasActiveFilters
+              ? "Try changing your search or filters."
+              : "Add your first task and start focusing."}
           </p>
         </div>
       </section>
@@ -23,7 +32,10 @@ function TaskList({
   }
 
   return (
-    <section className="task-list" aria-label="Task list">
+    <section
+      className="task-list"
+      aria-label="Task list"
+    >
       {tasks.map((task) => (
         <TaskItem
           key={task.id}
