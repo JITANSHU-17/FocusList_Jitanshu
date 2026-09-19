@@ -376,3 +376,116 @@
     padding: 7px 9px;
   }
 }
+
+/* Task actions */
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+}
+
+.edit-button,
+.delete-button {
+  border-radius: 8px;
+  padding: 8px 11px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.edit-button {
+  border: 1px solid #d8dee8;
+  background: #ffffff;
+  color: #475467;
+}
+
+.edit-button:hover {
+  border-color: #b8c3d1;
+  background: #f8fafc;
+  color: #172033;
+}
+
+/* Edit mode */
+
+.task-item-editing {
+  display: block;
+}
+
+.edit-task-form {
+  display: grid;
+  grid-template-columns: 1fr 150px auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-task-form input,
+.edit-task-form select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #d8dee8;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #172033;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.save-button,
+.cancel-button {
+  min-height: 42px;
+  padding: 9px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.save-button {
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.save-button:hover {
+  background: #1d4ed8;
+}
+
+.cancel-button {
+  border: 1px solid #d8dee8;
+  background: #ffffff;
+  color: #667085;
+}
+
+.cancel-button:hover {
+  background: #f8fafc;
+  color: #172033;
+}
+
+/* Mobile editing */
+
+@media (max-width: 700px) {
+  .edit-task-form {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-actions {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 520px) {
+  .task-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 7px 9px;
+  }
+}

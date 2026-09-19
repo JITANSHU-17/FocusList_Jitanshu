@@ -4,6 +4,7 @@ function TaskList({
   tasks,
   onToggleComplete,
   onDeleteTask,
+  onEditTask,
 }) {
   if (tasks.length === 0) {
     return (
@@ -29,6 +30,7 @@ function TaskList({
           task={task}
           onToggleComplete={onToggleComplete}
           onDeleteTask={onDeleteTask}
+          onEditTask={onEditTask}
         />
       ))}
     </section>
