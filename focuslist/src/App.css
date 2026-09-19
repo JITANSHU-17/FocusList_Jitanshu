@@ -228,3 +228,151 @@
     width: 100%;
   }
 }
+
+/* Task item */
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e9f0;
+  border-radius: 14px;
+  padding: 16px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.task-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.task-main {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.task-checkbox {
+  flex: 0 0 auto;
+  width: 23px;
+  height: 23px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.task-checkbox:hover {
+  border-color: #2563eb;
+}
+
+.task-checkbox.checked {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.task-content {
+  min-width: 0;
+}
+
+.task-content h3 {
+  color: #172033;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.task-completed .task-content h3 {
+  color: #98a2b3;
+  text-decoration: line-through;
+}
+
+.priority-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.priority-high {
+  background: #fff0ed;
+  color: #c4321f;
+}
+
+.priority-medium {
+  background: #fff7df;
+  color: #9a6700;
+}
+
+.priority-low {
+  background: #eef4ff;
+  color: #315ea8;
+}
+
+.task-actions {
+  flex: 0 0 auto;
+}
+
+.delete-button {
+  border: 1px solid #e2e6ed;
+  background: #ffffff;
+  color: #667085;
+  border-radius: 8px;
+  padding: 8px 11px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.delete-button:hover {
+  border-color: #f0b8b0;
+  background: #fff7f5;
+  color: #c4321f;
+}
+
+.task-completed {
+  opacity: 0.75;
+}
+
+/* Disabled controls */
+
+.filter-section button:disabled,
+.filter-section select:disabled,
+.filter-section input:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Mobile task layout */
+
+@media (max-width: 520px) {
+  .task-item {
+    align-items: flex-start;
+  }
+
+  .task-actions {
+    margin-left: auto;
+  }
+
+  .delete-button {
+    padding: 7px 9px;
+  }
+}

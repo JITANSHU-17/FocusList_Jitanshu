@@ -1,66 +1,98 @@
+import { useState } from "react";
 import "./App.css";
 
+import Header from "./components/Header";
+import TaskStats from "./components/TaskStats";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
+
+import { createTask } from "./utils/taskUtils";
+
 function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const handleAddTask = (title, priority) => {
+    const newTask = createTask(title, priority);
+
+    setTasks((currentTasks) => [
+      newTask,
+      ...currentTasks,
+    ]);
+  };
+
+  const handleToggleComplete = (taskId) => {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              completed: !task.completed,
+            }
+          : task
+      )
+    );
+  };
+
+  const handleDeleteTask = (taskId) => {
+    setTasks((currentTasks) =>
+      currentTasks.filter(
+        (task) => task.id !== taskId
+      )
+    );
+  };
+
   return (
     <div className="app">
       <div className="app-container">
-        <header className="app-header">
-          <div>
-            <h1>FocusList</h1>
-            <p>Focus on what matters today.</p>
-          </div>
-        </header>
+        <Header />
 
         <main>
-          <section className="stats-grid">
-            <div className="stat-card">
-              <span className="stat-label">Total Tasks</span>
-              <strong>0</strong>
-            </div>
+          <TaskStats tasks={tasks} />
 
-            <div className="stat-card">
-              <span className="stat-label">Completed</span>
-              <strong>0</strong>
-            </div>
-
-            <div className="stat-card">
-              <span className="stat-label">Pending</span>
-              <strong>0</strong>
-            </div>
-          </section>
-
-          <section className="task-form-card">
-            <input
-              type="text"
-              placeholder="What needs to be done?"
-              aria-label="Task title"
-            />
-
-            <select aria-label="Task priority" defaultValue="medium">
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
-
-            <button type="button">Add Task</button>
-          </section>
+          <TaskForm onAddTask={handleAddTask} />
 
           <section className="filter-section">
             <input
               type="search"
               placeholder="Search tasks..."
               aria-label="Search tasks"
+              disabled
             />
 
             <div className="filter-row">
               <div className="status-filters">
-                <button className="active">All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button
+                  type="button"
+                  className="active"
+                  disabled
+                >
+                  All
+                </button>
+
+                <button
+                  type="button"
+                  disabled
+                >
+                  Active
+                </button>
+
+                <button
+                  type="button"
+                  disabled
+                >
+                  Completed
+                </button>
               </div>
 
-              <select defaultValue="all" aria-label="Filter by priority">
-                <option value="all">All Priorities</option>
+              <select
+                defaultValue="all"
+                aria-label="Filter by priority"
+                disabled
+              >
+                <option value="all">
+                  All Priorities
+                </option>
+
                 <option value="high">High</option>
                 <option value="medium">Medium</option>
                 <option value="low">Low</option>
@@ -68,13 +100,11 @@ function App() {
             </div>
           </section>
 
-          <section className="task-list">
-            <div className="empty-state">
-              <div className="empty-icon">✓</div>
-              <h2>No tasks yet</h2>
-              <p>Add your first task and start focusing.</p>
-            </div>
-          </section>
+          <TaskList
+            tasks={tasks}
+            onToggleComplete={handleToggleComplete}
+            onDeleteTask={handleDeleteTask}
+          />
         </main>
       </div>
     </div>
