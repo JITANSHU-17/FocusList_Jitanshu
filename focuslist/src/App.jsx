@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import useLocalStorage from "./hooks/useLocalStorage";
 import "./App.css";
 
 import Header from "./components/Header";
@@ -10,7 +11,7 @@ import TaskList from "./components/TaskList";
 import { createTask } from "./utils/taskUtils";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useLocalStorage("focuslist-tasks", []);
 
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all");
