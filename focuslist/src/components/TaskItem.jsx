@@ -100,21 +100,17 @@ function TaskItem({
       }`}
     >
       <div className="task-main">
-        <button
-          type="button"
-          className={`task-checkbox ${
-            task.completed ? "checked" : ""
-          }`}
-          onClick={() => onToggleComplete(task.id)}
-          aria-label={
-            task.completed
-              ? `Mark ${task.title} as active`
-              : `Mark ${task.title} as completed`
-          }
-          aria-pressed={task.completed}
-        >
-          {task.completed ? "✓" : ""}
-        </button>
+        <input
+            type="checkbox"
+            className="task-checkbox"
+            checked={task.completed}
+            onChange={() => onToggleComplete(task.id)}
+            aria-label={
+                task.completed
+                ? `Mark ${task.title} as active`
+                : `Mark ${task.title} as completed`
+            }
+        />
 
         <div className="task-content">
           <h3>{task.title}</h3>
@@ -129,30 +125,28 @@ function TaskItem({
 
       <div className="task-actions">
         <button
-          type="button"
-          className="edit-button"
-          onClick={handleStartEditing}
-          aria-label={`Edit ${task.title}`}
-        >
-          Edit
+            type="button"
+            className="edit-button"
+            onClick={handleStartEditing}
+            aria-label={`Edit ${task.title}`}
+            >
+            Edit
         </button>
 
         <button
-  type="button"
-  className="delete-button"
-  onClick={() => {
-    const confirmed = window.confirm(
-      `Delete "${task.title}"?`
-    );
+            type="button"
+            className="delete-button"
+            onClick={() => {
+                const confirmed = window.confirm(`Delete "${task.title}"?`);
 
-    if (confirmed) {
-      onDeleteTask(task.id);
-    }
-  }}
-  aria-label={`Delete ${task.title}`}
->
-  Delete
-</button>
+                if (confirmed) {
+                onDeleteTask(task.id);
+                }
+            }}
+            aria-label={`Delete ${task.title}`}
+            >
+            Delete
+        </button>
       </div>
     </article>
   );
